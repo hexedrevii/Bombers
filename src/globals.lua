@@ -7,6 +7,8 @@ local globals = {
   renderer = Renderer.new(320, 180),
   worlds = WorldManager.new(),
 
+  showHitboxes = true,
+
   cursor_normal = love.mouse.newCursor('assets/cursor-normal.png', 16, 16),
   cursor_hold = love.mouse.newCursor('assets/cursor-holding.png', 16, 16)
 }
