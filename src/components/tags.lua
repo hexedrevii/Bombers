@@ -8,6 +8,8 @@ Concord.component('Player', function(c)
   c.reloading = false
 end)
 
+Concord.component('Reloader')
+
 -- Timer Tags
 Concord.component('FinishedReloading')
 Concord.component('BulletDied')

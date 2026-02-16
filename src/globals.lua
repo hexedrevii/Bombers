@@ -9,6 +9,8 @@ local globals = {
 
   showHitboxes = true,
 
+  font = love.graphics.newFont('assets/fonts/Pixeled.ttf', 6),
+
   cursor_normal = love.mouse.newCursor('assets/cursor-normal.png', 16, 16),
   cursor_hold = love.mouse.newCursor('assets/cursor-holding.png', 16, 16)
 }

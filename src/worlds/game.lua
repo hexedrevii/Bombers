@@ -2,7 +2,6 @@ local Concord = require 'lib.Concord'
 Concord.utils.loadNamespace('src/components')
 
 local moonshine = require 'lib.moonshine'
-
 local globals = require 'src.globals'
 
 -- Systems
@@ -13,6 +12,7 @@ local TimerControlSystem = require 'src.systems.timerhandler'
 local SpriteSystem = require 'src.systems.spritecontrol'
 local HitboxSystem = require 'src.systems.hitboxcontrol'
 local DamageSystem = require 'src.systems.damage'
+local ReloaderSystem = require 'src.systems.reloadercontrol'
 
 local game = {}
 
@@ -32,6 +32,12 @@ function game:__setupEffect()
   self.effect.chromasep.radius = 1.1
 end
 
+function game:shake(shakeDuration, shakeMagnitude)
+  self.shakeTime = 0
+  self.shakeDuration = shakeDuration
+  self.shakeMagnitude = shakeMagnitude
+end
+
 function game:init()
   self:__setupEffect()
 
@@ -44,14 +50,20 @@ function game:init()
     SpriteSystem,
     HitboxSystem,
     BulletDiedSystem,
-    DamageSystem
+    DamageSystem,
+    ReloaderSystem
   )
+
+  self.shakeTime = 0
+  self.shakeDuration = 0
+  self.shakeMagnitude = 0
 
   self.player = Concord.entity(self.world)
   self.player
       :give('Position')
       :give('Player')
       :give('Health')
+      :give('Sprite', love.graphics.newImage('assets/cursor-normal-export.png'), -8, -8)
 
   Concord.entity(self.world)
       :give('Position', 40, 40)
@@ -62,15 +74,29 @@ end
 
 function game:update(delta)
   self.world:emit('update', delta)
+
+  if self.shakeTime < self.shakeDuration then
+    self.shakeTime = self.shakeTime + delta
+  end
 end
 
 function game:draw()
   globals.renderer:set()
-  love.graphics.clear(0, 0, 0)
 
+  if self.shakeTime < self.shakeDuration then
+    local dx = love.math.random(-self.shakeMagnitude, self.shakeMagnitude)
+    local dy = love.math.random(-self.shakeMagnitude, self.shakeMagnitude)
+    love.graphics.translate(dx, dy)
+  end
+
+  love.graphics.clear(0.1, 0.1, 0.1)
   self.world:emit('draw')
 
   globals.renderer:render(nil, nil, self.effect)
+end
+
+function game:resize(w, h)
+  self.effect.resize(w, h)
 end
 
 return game

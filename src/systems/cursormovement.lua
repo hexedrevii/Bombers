@@ -12,6 +12,10 @@ function CursorMovementSystem:update(delta)
     if globals.input:isPressed('shoot') and not plr.reloading then
       plr.reloading = true
       entity:give('Timer', 0.5, 'FinishedReloading')
+      entity:give('Reloader')
+
+      ---@diagnostic disable-next-line: undefined-field
+      globals.worlds.active:shake(0.14, 0.75)
 
       -- Create the bullet
       Concord.entity(entity:getWorld())

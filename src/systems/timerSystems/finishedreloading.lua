@@ -8,6 +8,7 @@ function FinishedReloadingSystem:update(delta)
     plr.reloading = false
 
     entity:remove('FinishedReloading')
+    entity:remove('Reloader')
   end
 end
 

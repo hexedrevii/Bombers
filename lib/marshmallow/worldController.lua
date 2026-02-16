@@ -17,6 +17,7 @@ worldController.__index = worldController
 ---@field init function?
 ---@field update function
 ---@field draw function
+---@field resize function?
 local _world = {}
 
 function worldController.new()
@@ -41,6 +42,12 @@ end
 
 function worldController:draw()
   self.active:draw()
+end
+
+function worldController:resize(w, h)
+  if self.active.resize then
+    self.active:resize(w, h)
+  end
 end
 
 return worldController

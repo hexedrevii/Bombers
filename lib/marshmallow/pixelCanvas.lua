@@ -99,8 +99,6 @@ function pixelCanvas:render(sx, sy, effect)
   local x, y             = (screen_x - scale_x) * 0.5, (screen_y - scale_y) * 0.5
 
   if effect then
-    effect.resize(screen_x, screen_y)
-
     effect(function()
       love.graphics.clear(self.clearColour)
       love.graphics.draw(self.__body, x, y, 0, scale, scale)

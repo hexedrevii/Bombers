@@ -2,7 +2,7 @@ local globals = require "src.globals"
 local game = require 'src.worlds.game'
 
 function love.load()
-  love.mouse.setCursor(globals.cursor_normal)
+  --love.mouse.setCursor(globals.cursor_normal)
 
   globals.input:pushKeymap('shoot', nil, nil, 1)
 
@@ -15,6 +15,10 @@ end
 
 function love.draw()
   globals.worlds:draw()
+end
+
+function love.resize(w, h)
+  globals.worlds:resize(w, h)
 end
 
 function love.mousepressed(x, y, btn)
