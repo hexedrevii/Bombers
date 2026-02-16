@@ -85,7 +85,8 @@ end
 
 ---@param sx number?
 ---@param sy number?
-function pixelCanvas:render(sx, sy)
+---@param effect table?
+function pixelCanvas:render(sx, sy, effect)
   love.graphics.setCanvas()
 
   local scale = self:getScale(sx, sy)
@@ -97,8 +98,17 @@ function pixelCanvas:render(sx, sy)
   local scale_x, scale_y = self.w * scale, self.h * scale
   local x, y             = (screen_x - scale_x) * 0.5, (screen_y - scale_y) * 0.5
 
-  love.graphics.clear(self.clearColour)
-  love.graphics.draw(self.__body, x, y, 0, scale, scale)
+  if effect then
+    effect.resize(screen_x, screen_y)
+
+    effect(function()
+      love.graphics.clear(self.clearColour)
+      love.graphics.draw(self.__body, x, y, 0, scale, scale)
+    end)
+  else
+    love.graphics.clear(self.clearColour)
+    love.graphics.draw(self.__body, x, y, 0, scale, scale)
+  end
 end
 
 return pixelCanvas

@@ -12,7 +12,5 @@ function love.update(delta)
 end
 
 function love.draw()
-  globals.renderer:set()
   globals.worlds:draw()
-  globals.renderer:render()
 end
