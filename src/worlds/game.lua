@@ -34,11 +34,11 @@ function game:__setupEffect()
   self.effect.crt.distortionFactor = { 1.055, 1.05 }
 
   self.effect.vignette.radius = 0.9
-  self.effect.scanlines.opacity = 0.1
+  self.effect.scanlines.opacity = 0.3
   self.effect.vignette.opacity = 0.2
 
-  self.effect.chromasep.angle = 1.0645
-  self.effect.chromasep.radius = 1.1
+  self.effect.chromasep.angle = 3.1
+  self.effect.chromasep.radius = 1.4
 end
 
 function game:shake(shakeDuration, shakeMagnitude)

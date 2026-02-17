@@ -18,6 +18,7 @@ local function buildDefaultEnemy(world, x, y, scr, hp)
       :give('Health', hp)
       :give('HealthDisplay')
       :give('Faction', 'Enemy')
+      :give('OffScreenDeath')
 end
 
 function Assemblers.Bomber(world)
@@ -29,7 +30,6 @@ function Assemblers.Bomber(world)
       :give('Physics', love.math.random(80, 100))
       :give('Shooter', 1.5, 150, 'BulletDown', 8, 16)
       :give('Bomber')
-      :give('OffScreenDeath')
 end
 
 function Assemblers.BulletDown(world, sx, sy, speed, faction)
