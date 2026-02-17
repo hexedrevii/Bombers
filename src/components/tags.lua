@@ -9,6 +9,11 @@ Concord.component('Player', function(c)
 end)
 
 Concord.component('Reloader')
+Concord.component('Dead')
+
+
+-- Enemy Tags
+Concord.component('Bomber')
 
 -- Timer Tags
 Concord.component('FinishedReloading')

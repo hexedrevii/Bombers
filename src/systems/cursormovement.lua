@@ -1,11 +1,12 @@
 local Concord = require 'lib.Concord'
 local globals = require 'src.globals'
 
-local CursorMovementSystem = Concord.system({ pool = { 'Position', 'Player' } })
+local CursorMovementSystem = Concord.system({ pool = { 'Position', 'Hitbox', 'Player' } })
 
 function CursorMovementSystem:update(delta)
   for _, entity in ipairs(self.pool) do
     local pos = entity.Position
+    local hb = entity.Hitbox
     local plr = entity.Player
     pos.x, pos.y = globals.renderer:getMouseWorld()
 
@@ -20,6 +21,8 @@ function CursorMovementSystem:update(delta)
       -- Create the bullet
       Concord.entity(entity:getWorld())
           :give('Bullet', 1)
+          :give('Faction', 'Player')
+          :give('Hitbox', hb.w, hb.h, hb.ox, hb.oy)
           :give('Position', pos.x, pos.y)
           :give('Timer', 0.1, 'BulletDied')
     end

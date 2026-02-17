@@ -4,7 +4,7 @@ local waveConfig = {
     duration = 30,
     spawnRate = 1.5,
 
-    enemies = { 'BasicMover' }
+    enemies = { 'Bomber' }
   }
 }
 

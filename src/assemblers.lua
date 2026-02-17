@@ -10,7 +10,7 @@ local function getRandomXEdge()
   return x, y, dx
 end
 
-function Assemblers.BasicMover(world)
+function Assemblers.Bomber(world)
   local x, y, dx = getRandomXEdge()
 
   return Concord.entity(world)
@@ -20,6 +20,21 @@ function Assemblers.BasicMover(world)
       :give('Physics', love.math.random(80, 100))
       :give('Hitbox', 16, 16)
       :give('Health', 2)
+      :give('Shooter', 1.5, 150, 'BulletDown', 8, 16)
+      :give('Bomber')
+      :give('Faction', 'Enemy')
+end
+
+function Assemblers.BulletDown(world, sx, sy, speed, faction)
+  return Concord.entity(world)
+      :give('Position', sx, sy)
+      :give('Hitbox', 8, 8)
+      :give('Bullet', 1)
+      :give('BasicMover', 0, 1)
+      :give('Physics', speed)
+      :give('Sprite', globals.resources:get('bullet'))
+      :give('Timer', 2, 'BulletDied')
+      :give('Faction', faction)
 end
 
 return Assemblers
