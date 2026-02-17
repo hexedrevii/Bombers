@@ -11,7 +11,6 @@ function WaveManagerSystem:update(delta)
 
     wave.waveTimer = wave.waveTimer + delta
     if wave.waveTimer >= waveData.duration then
-      print('awa 1')
       wave.index = wave.index + 1
       wave.waveTimer = 0
       wave.spawnTimer = 0
