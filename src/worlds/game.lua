@@ -16,6 +16,8 @@ local ReloaderSystem = require 'src.systems.reloadercontrol'
 local WaveManagerSystem = require 'src.systems.wavemanager'
 local ShooterSystem = require 'src.systems.shootersystem'
 local DeathSystem = require 'src.systems.death'
+local StatisticSystem = require 'src.systems.statistics'
+local HealthDisplaySystem = require 'src.systems.health'
 
 -- Systems (Enemy AI)
 local BasicMoverSystem = require 'src.systems.basicmover'
@@ -61,7 +63,9 @@ function game:init()
     BasicMoverSystem,
     WaveManagerSystem,
     ShooterSystem,
-    DeathSystem
+    DeathSystem,
+    StatisticSystem,
+    HealthDisplaySystem
   )
 
   self.shakeTime = 0

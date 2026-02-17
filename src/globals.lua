@@ -8,7 +8,7 @@ local globals = {
   renderer = Renderer.new(320, 180),
   worlds = WorldManager.new(),
 
-  showHitboxes = true,
+  showHitboxes = false,
 
   resources = ResourceManager.new(),
 

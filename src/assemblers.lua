@@ -10,19 +10,25 @@ local function getRandomXEdge()
   return x, y, dx
 end
 
+local function buildDefaultEnemy(world, x, y, scr, hp)
+  return Concord.entity(world)
+      :give('Position', x, y)
+      :give('Hitbox', 16, 16)
+      :give('Score', scr)
+      :give('Health', hp)
+      :give('HealthDisplay')
+      :give('Faction', 'Enemy')
+end
+
 function Assemblers.Bomber(world)
   local x, y, dx = getRandomXEdge()
 
-  return Concord.entity(world)
-      :give('Position', x, y)
+  return buildDefaultEnemy(world, x, y, nil, 2)
       :give('BasicMover', dx, 0)
       :give('Sprite', globals.resources:get('bomber'), nil, nil, dx == -1)
       :give('Physics', love.math.random(80, 100))
-      :give('Hitbox', 16, 16)
-      :give('Health', 2)
       :give('Shooter', 1.5, 150, 'BulletDown', 8, 16)
       :give('Bomber')
-      :give('Faction', 'Enemy')
 end
 
 function Assemblers.BulletDown(world, sx, sy, speed, faction)
