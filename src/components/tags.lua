@@ -10,7 +10,10 @@ end)
 Concord.component('Reloader')
 Concord.component('Dead')
 Concord.component('HealthDisplay')
-Concord.component('OffScreenDeath')
+
+Concord.component('OffScreenDeath', function(c, buffer)
+  c.buffer = buffer or 50
+end)
 
 -- Enemy Tags
 Concord.component('Bomber')

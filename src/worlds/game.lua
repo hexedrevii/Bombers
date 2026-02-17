@@ -18,6 +18,7 @@ local ShooterSystem = require 'src.systems.shootersystem'
 local DeathSystem = require 'src.systems.death'
 local StatisticSystem = require 'src.systems.statistics'
 local HealthDisplaySystem = require 'src.systems.health'
+local OffscreenDeathSystem = require 'src.systems.offscreen'
 
 -- Systems (Enemy AI)
 local BasicMoverSystem = require 'src.systems.basicmover'
@@ -65,7 +66,8 @@ function game:init()
     ShooterSystem,
     DeathSystem,
     StatisticSystem,
-    HealthDisplaySystem
+    HealthDisplaySystem,
+    OffscreenDeathSystem
   )
 
   self.shakeTime = 0
