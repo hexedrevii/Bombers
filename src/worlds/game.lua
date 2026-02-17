@@ -13,6 +13,10 @@ local SpriteSystem = require 'src.systems.spritecontrol'
 local HitboxSystem = require 'src.systems.hitboxcontrol'
 local DamageSystem = require 'src.systems.damage'
 local ReloaderSystem = require 'src.systems.reloadercontrol'
+local WaveManagerSystem = require 'src.systems.wavemanager'
+
+-- Systems (Enemy AI)
+local BasicMoverSystem = require 'src.systems.basicmover'
 
 local game = {}
 
@@ -51,25 +55,27 @@ function game:init()
     HitboxSystem,
     BulletDiedSystem,
     DamageSystem,
-    ReloaderSystem
+    ReloaderSystem,
+    BasicMoverSystem,
+    WaveManagerSystem
   )
 
   self.shakeTime = 0
   self.shakeDuration = 0
   self.shakeMagnitude = 0
 
+  globals.resources:add('bomber', love.graphics.newImage('assets/enemies/bomber.png'))
+  globals.resources:add('cursor', love.graphics.newImage('assets/cursor-normal-export.png'))
+
   self.player = Concord.entity(self.world)
   self.player
       :give('Position')
       :give('Player')
       :give('Health')
-      :give('Sprite', love.graphics.newImage('assets/cursor-normal-export.png'), -8, -8)
+      :give('Sprite', globals.resources:get('cursor'), -8, -8)
 
   Concord.entity(self.world)
-      :give('Position', 40, 40)
-      :give('Health', 2)
-      :give('Sprite', love.graphics.newImage('assets/enemies/bomber.png'))
-      :give('Hitbox', 16, 16)
+      :give('WaveManager')
 end
 
 function game:update(delta)

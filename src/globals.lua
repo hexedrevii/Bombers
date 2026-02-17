@@ -1,6 +1,7 @@
 local InputManager = require 'lib.marshmallow.input'
 local Renderer = require 'lib.marshmallow.pixelCanvas'
 local WorldManager = require 'lib.marshmallow.worldController'
+local ResourceManager = require 'src.resourcemanager'
 
 local globals = {
   input = InputManager.new(),
@@ -9,10 +10,9 @@ local globals = {
 
   showHitboxes = true,
 
-  font = love.graphics.newFont('assets/fonts/Pixeled.ttf', 6),
+  resources = ResourceManager.new(),
 
-  cursor_normal = love.mouse.newCursor('assets/cursor-normal.png', 16, 16),
-  cursor_hold = love.mouse.newCursor('assets/cursor-holding.png', 16, 16)
+  font = love.graphics.newFont('assets/fonts/Pixeled.ttf', 6),
 }
 
 return globals
