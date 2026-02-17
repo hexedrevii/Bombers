@@ -1,0 +1,25 @@
+local globals = require 'src.globals'
+local Concord = require 'lib.Concord'
+
+local Assemblers = {}
+
+local function getRandomXEdge()
+  local dx = love.math.random(1, 2) == 2 and -1 or 1
+  local x = (dx == -1) and (globals.renderer.w + 16) or -16
+  local y = love.math.random(16, globals.renderer.h - 16)
+  return x, y, dx
+end
+
+function Assemblers.BasicMover(world)
+  local x, y, dx = getRandomXEdge()
+
+  return Concord.entity(world)
+      :give('Position', x, y)
+      :give('BasicMover', dx, 0)
+      :give('Sprite', globals.resources:get('bomber'), nil, nil, dx == -1)
+      :give('Physics', love.math.random(80, 100))
+      :give('Hitbox', 16, 16)
+      :give('Health', 2)
+end
+
+return Assemblers

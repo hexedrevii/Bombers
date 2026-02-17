@@ -1,6 +1,6 @@
 local Concord = require 'lib.Concord'
 local waveconfig = require 'src.waveconfig'
-local globals = require 'src.globals'
+local assemblers = require 'src.assemblers'
 
 local WaveManagerSystem = Concord.system({ pool = { 'WaveManager' } })
 
@@ -22,27 +22,11 @@ function WaveManagerSystem:update(delta)
     if wave.spawnTimer >= waveData.spawnRate then
       wave.spawnTimer = 0
 
+      local enemyType = waveData.enemies[love.math.random(#waveData.enemies)]
 
-      local enemyType = love.math.random(#waveData.enemies)
-      self:__spawnEnemy(waveData.enemies[enemyType])
+      assert(assemblers[enemyType] ~= nil, 'Assembler for ' .. enemyType .. ' does not exist!')
+      assemblers[enemyType](self:getWorld())
     end
-  end
-end
-
-function WaveManagerSystem:__spawnEnemy(component)
-  if component == 'BasicMover' then
-    local dx = love.math.random(1, 2) == 2 and -1 or 1
-
-    local px = dx == -1 and globals.renderer.w + 16 or -16
-    local py = love.math.random(16, globals.renderer.h - 16)
-
-    self:getWorld():newEntity()
-        :give(component, dx, 0)
-        :give('Position', px, py)
-        :give('Sprite', globals.resources:get('bomber'), nil, nil, dx == -1 and true or false)
-        :give('Physics', love.math.random(80, 100))
-        :give('Hitbox', 16, 16)
-        :give('Health', 2)
   end
 end
 
