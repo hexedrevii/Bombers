@@ -17,6 +17,7 @@ end)
 
 -- Enemy Tags
 Concord.component('Bomber')
+Concord.component('Downer')
 
 -- Timer Tags
 Concord.component('FinishedReloading')
