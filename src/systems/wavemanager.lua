@@ -37,7 +37,7 @@ local function getRandomPattern(patterns)
 end
 
 function WaveManagerSystem:init()
-  self.sides = Set { 'Bomber' }
+  self.sides = Set { 'Bomber', 'B2' }
 end
 
 function WaveManagerSystem:update(delta)

@@ -47,8 +47,25 @@ function Assemblers.Downer(world, x, y, buff)
       :give('BasicMover', 0, 1)
       :give('Sprite', globals.resources:get('downer'))
       :give('Physics', 100)
-      :give('Shooter', 1.25, 200, 'BulletDown', 8, 16)
+      :give('Shooter', 1.1, 200, 'BulletDown', 8, 16)
       :give('Downer')
+end
+
+function Assemblers.B2(world, x, y, buff)
+  local dx;
+
+  if not x or not y then
+    x, y, dx = getRandomXEdge()
+  else
+    dx = (x < globals.renderer.w / 2) and 1 or -1
+  end
+
+  return buildDefaultEnemy(world, x, y, nil, 3, buff)
+      :give('BasicMover', dx, 0)
+      :give('Sprite', globals.resources:get('b2'), nil, nil, dx == -1)
+      :give('Physics', 100)
+      :give('Shooter', 1.5, 200, 'BulletStraight', 8, 16, dx)
+      :give('B2')
 end
 
 function Assemblers.BulletDown(world, sx, sy, speed, faction)
@@ -59,6 +76,18 @@ function Assemblers.BulletDown(world, sx, sy, speed, faction)
       :give('BasicMover', 0, 1)
       :give('Physics', speed)
       :give('Sprite', globals.resources:get('bullet'))
+      :give('Timer', 2, 'BulletDied')
+      :give('Faction', faction)
+end
+
+function Assemblers.BulletStraight(world, sx, sy, speed, faction, dx)
+  return Concord.entity(world)
+      :give('Position', sx - 8, sy - 8)
+      :give('Hitbox', 8, 8)
+      :give('Bullet', 1)
+      :give('BasicMover', dx, 0)
+      :give('Physics', speed)
+      :give('Sprite', globals.resources:get('bullet-side'))
       :give('Timer', 2, 'BulletDied')
       :give('Faction', faction)
 end

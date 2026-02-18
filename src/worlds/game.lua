@@ -77,7 +77,10 @@ function game:init()
   globals.resources:add('bomber', love.graphics.newImage('assets/enemies/bomber.png'))
   globals.resources:add('cursor', love.graphics.newImage('assets/cursor-normal-export.png'))
   globals.resources:add('bullet', love.graphics.newImage('assets/bullets/bullet.png'))
+  globals.resources:add('bullet-side', love.graphics.newImage('assets/bullets/bullet-side.png'))
   globals.resources:add('downer', love.graphics.newImage('assets/enemies/downer.png'))
+  globals.resources:add('b2', love.graphics.newImage('assets/enemies/b2.png'))
+  globals.resources:add('heart', love.graphics.newImage('assets/heart.png'))
 
   self.player = Concord.entity(self.world)
   self.player

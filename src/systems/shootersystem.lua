@@ -17,7 +17,7 @@ function ShooterSystem:update(delta)
 
       assert(assemblers[sht.type] ~= nil, 'Assembler for ' .. sht.type .. ' does not exist!')
 
-      assemblers[sht.type](self:getWorld(), sx, sy, sht.speed, entity.Faction.name)
+      assemblers[sht.type](self:getWorld(), sx, sy, sht.speed, entity.Faction.name, sht.dx, sht.dy)
     end
   end
 end
