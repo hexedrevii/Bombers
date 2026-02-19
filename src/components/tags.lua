@@ -1,8 +1,8 @@
 local Concord = require 'lib.Concord'
 
-Concord.component('Player', function(c)
-  c.score = 0
-  c.kills = 0
+Concord.component('Player', function(c, scr, kills)
+  c.score = scr or 0
+  c.kills = kills or 0
 
   c.reloading = false
 end)
@@ -23,3 +23,4 @@ Concord.component('B2')
 -- Timer Tags
 Concord.component('FinishedReloading')
 Concord.component('BulletDied')
+Concord.component('EndGame')

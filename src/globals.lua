@@ -13,6 +13,7 @@ local globals = {
   resources = ResourceManager.new(),
 
   font = love.graphics.newFont('assets/fonts/Pixeled.ttf', 6),
+  fontBig = love.graphics.newFont('assets/fonts/Pixeled.ttf', 8),
 }
 
 return globals

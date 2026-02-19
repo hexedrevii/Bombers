@@ -19,6 +19,7 @@ local DeathSystem = require 'src.systems.death'
 local StatisticSystem = require 'src.systems.statistics'
 local HealthDisplaySystem = require 'src.systems.health'
 local OffscreenDeathSystem = require 'src.systems.offscreen'
+local GameEndSystem = require 'src.systems.finish'
 
 -- Systems (Enemy AI)
 local BasicMoverSystem = require 'src.systems.basicmover'
@@ -67,20 +68,15 @@ function game:init()
     DeathSystem,
     StatisticSystem,
     HealthDisplaySystem,
-    OffscreenDeathSystem
+    OffscreenDeathSystem,
+    GameEndSystem
   )
 
   self.shakeTime = 0
   self.shakeDuration = 0
   self.shakeMagnitude = 0
 
-  globals.resources:add('bomber', love.graphics.newImage('assets/enemies/bomber.png'))
-  globals.resources:add('cursor', love.graphics.newImage('assets/cursor-normal-export.png'))
-  globals.resources:add('bullet', love.graphics.newImage('assets/bullets/bullet.png'))
-  globals.resources:add('bullet-side', love.graphics.newImage('assets/bullets/bullet-side.png'))
-  globals.resources:add('downer', love.graphics.newImage('assets/enemies/downer.png'))
-  globals.resources:add('b2', love.graphics.newImage('assets/enemies/b2.png'))
-  globals.resources:add('heart', love.graphics.newImage('assets/heart.png'))
+  self.ended = false
 
   self.player = Concord.entity(self.world)
   self.player
@@ -93,6 +89,17 @@ function game:init()
 
   Concord.entity(self.world)
       :give('WaveManager')
+
+  self.staticShader = love.graphics.newShader [[
+    extern float time;
+    float rand(vec2 co) {
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    }
+    vec4 effect(vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords) {
+        float noise = rand(texture_coords + time);
+        return vec4(vec3(noise), 1.0); // Output white/black noise
+    }
+  ]]
 end
 
 function game:update(delta)
@@ -100,6 +107,10 @@ function game:update(delta)
 
   if self.shakeTime < self.shakeDuration then
     self.shakeTime = self.shakeTime + delta
+  end
+
+  if self.ended then
+    self.staticShader:send('time', love.timer.getTime())
   end
 end
 
@@ -114,6 +125,12 @@ function game:draw()
 
   love.graphics.clear(0.1, 0.1, 0.1)
   self.world:emit('draw')
+
+  if self.ended then
+    love.graphics.setShader(self.staticShader)
+    love.graphics.draw(globals.resources:get('square'))
+    love.graphics.setShader()
+  end
 
   globals.renderer:render(nil, nil, self.effect)
 end
