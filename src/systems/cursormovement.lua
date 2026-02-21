@@ -18,6 +18,9 @@ function CursorMovementSystem:update(delta)
       ---@diagnostic disable-next-line: undefined-field
       globals.worlds.active:shake(0.14, 0.75)
 
+      globals.explosion:setPosition(pos.x, pos.y)
+      globals.explosion:emit(7)
+
       -- Create the bullet
       Concord.entity(entity:getWorld())
           :give('Bullet', 1)

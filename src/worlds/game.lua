@@ -100,10 +100,59 @@ function game:init()
         return vec4(vec3(noise), 1.0); // Output white/black noise
     }
   ]]
+
+  -- Build background dust
+  local dustData = love.image.newImageData(2, 2)
+  dustData:mapPixel(function() return 1, 1, 1, 1 end)
+  local dustImage = love.graphics.newImage(dustData)
+
+  self.dust = love.graphics.newParticleSystem(dustImage, 1000)
+
+  self.dust:setParticleLifetime(3, 8)
+  self.dust:setEmissionRate(40)
+
+  self.dust:setEmissionArea('uniform', 160, 90)
+
+  self.dust:setDirection(-math.pi / 2)
+  self.dust:setSpread(math.pi / 2)
+  self.dust:setSpeed(5, 15)
+
+  self.dust:setColors(
+    1, 1, 1, 0,
+    1, 1, 1, 0.4,
+    1, 1, 1, 0
+  )
+
+  self.dust:setSizes(0.5, 1.0, 0.3)
+
+  -- Set a bunch of bs
+  self.dust:update(10)
+
+  -- Shoot explosion stuff
+  self.explosion = love.graphics.newParticleSystem(love.graphics.newImage('assets/shoot-particle.png'))
+  self.explosion:setParticleLifetime(0.4, 0.8)
+
+  self.explosion:setSpread(math.pi * 2)
+  self.explosion:setSpeed(100, 250)
+
+  self.explosion:setLinearDamping(3, 6)
+
+  self.explosion:setSpin(-15, 15)
+
+  self.explosion:setSizes(1.5, 1.0, 0.0)
+  self.explosion:setColors(
+    1, 1, 1, 1,
+    1, 1, 1, 0.8,
+    1, 1, 1, 0
+  )
+
+  globals.explosion = self.explosion
 end
 
 function game:update(delta)
   self.world:emit('update', delta)
+  self.dust:update(delta)
+  self.explosion:update(delta)
 
   if self.shakeTime < self.shakeDuration then
     self.shakeTime = self.shakeTime + delta
@@ -124,7 +173,10 @@ function game:draw()
   end
 
   love.graphics.clear(0.1, 0.1, 0.1)
+  love.graphics.draw(self.dust, 160, 90)
+
   self.world:emit('draw')
+  love.graphics.draw(self.explosion, 0, 0)
 
   if self.ended then
     love.graphics.setShader(self.staticShader)

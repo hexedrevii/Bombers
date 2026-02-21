@@ -1,5 +1,6 @@
 local Concord = require 'lib.Concord'
 local assemblers = require 'src.assemblers'
+local globals = require 'src.globals'
 
 local ShooterSystem = Concord.system({ pool = { 'Position', 'Shooter', 'Faction' } })
 
@@ -18,6 +19,8 @@ function ShooterSystem:update(delta)
       assert(assemblers[sht.type] ~= nil, 'Assembler for ' .. sht.type .. ' does not exist!')
 
       assemblers[sht.type](self:getWorld(), sx, sy, sht.speed, entity.Faction.name, sht.dx, sht.dy)
+      globals.explosion:setPosition(sx, sy)
+      globals.explosion:emit(3)
     end
   end
 end
